@@ -75,7 +75,7 @@ export default function CreateProjectForm({
     console.log(techStack.join(","))
     try {
       // Make the API call using your existing API endpoint
-      const response = await fetch("https://collabsphere-nz2u.onrender.com/add/project", {
+      const response = await fetch("https://collabsphere-d7g1.onrender.com/add/project", {
         method: "POST",
         credentials: "include", // Include cookies if needed
         headers: {

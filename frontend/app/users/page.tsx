@@ -14,7 +14,7 @@ export default function TeamPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://collabsphere-nz2u.onrender.com/list/users", {
+        const response = await fetch("https://collabsphere-d7g1.onrender.com/list/users", {
           method: "GET",
           credentials: "include",
           headers: {

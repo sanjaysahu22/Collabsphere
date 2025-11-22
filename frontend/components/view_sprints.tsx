@@ -33,7 +33,7 @@ const ProjectSprints = ({ project_id, onLatestSprintSelect, label }: ProjectSpri
       try {
         setLoading(true);
         const response = await fetch(
-          `https://collabsphere-nz2u.onrender.com/project/view_sprints?project_id=${project_id}`,
+          `https://collabsphere-d7g1.onrender.com/project/view_sprints?project_id=${project_id}`,
           {
             method: "GET",
             credentials: "include",

@@ -35,7 +35,7 @@ export default function SprintManagement({ project_id, projectTitle }: SprintMan
 
   const fetchSprints = async () => {
     // Fetch sprints from API
-    const response = await fetch(`https://collabsphere-nz2u.onrender.com/project/view_sprints?project_id=${project_id}`)
+    const response = await fetch(`https://collabsphere-d7g1.onrender.com/project/view_sprints?project_id=${project_id}`)
     const data = await response.json()
     setSprints(data.sprints)
     console.log(data)

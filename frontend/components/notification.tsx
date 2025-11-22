@@ -42,7 +42,7 @@ export default function NotificationBell() {
       setError(null)
       
       // For testing: Add a check to see if the server is running
-      const testResponse = await fetch("https://collabsphere-nz2u.onrender.com/ping", {
+      const testResponse = await fetch("https://collabsphere-d7g1.onrender.com/ping", {
         method: "GET",
         credentials: "include",
         headers: {
@@ -53,7 +53,7 @@ export default function NotificationBell() {
         console.log("Server is not reachable")
       })
       
-      const response = await fetch("https://collabsphere-nz2u.onrender.com/notification", {
+      const response = await fetch("https://collabsphere-d7g1.onrender.com/notification", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -126,7 +126,7 @@ export default function NotificationBell() {
   const handleAcceptRequest = async (applicationId: number,project_id:number,applicant_id:string, accept: boolean) => {
     try {
       setLoading(true)
-      const response = await fetch("https://collabsphere-nz2u.onrender.com/update/project/app/status", {
+      const response = await fetch("https://collabsphere-d7g1.onrender.com/update/project/app/status", {
         method: "POST",
         credentials: "include",
         headers: {

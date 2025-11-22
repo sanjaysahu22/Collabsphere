@@ -30,7 +30,7 @@ const TeamMemberDropdown: React.FC<TeamMemberDropdownProps> = ({
         setError(null);
         
         // Always call the eligible_users API endpoint, regardless of purpose
-        const apiUrl = `https://collabsphere-nz2u.onrender.com/project/add_mod/eligible_users?project_id=${projectId}`;
+        const apiUrl = `https://collabsphere-d7g1.onrender.com/project/add_mod/eligible_users?project_id=${projectId}`;
         
         const response = await fetch(apiUrl, {
           method: "GET",
@@ -77,7 +77,7 @@ const TeamMemberDropdown: React.FC<TeamMemberDropdownProps> = ({
   // Function to promote a user to moderator
   const handlePromoteToMod = async (userId: string) => {
     try {
-      const response = await fetch("https://collabsphere-nz2u.onrender.com/project/add_mod/promote", {
+      const response = await fetch("https://collabsphere-d7g1.onrender.com/project/add_mod/promote", {
         method: "POST",
         credentials: "include",
         headers: {

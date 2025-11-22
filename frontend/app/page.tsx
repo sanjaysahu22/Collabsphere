@@ -22,7 +22,7 @@ export default function Home() {
     
     const fetchData = async () => {
       try {
-        const response = await fetch("https://collabsphere-nz2u.onrender.com/best_projects", {
+        const response = await fetch("https://collabsphere-d7g1.onrender.com/best_projects", {
           method: "GET",
           credentials: "include", // Include cookies if needed
         });

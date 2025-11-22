@@ -37,7 +37,7 @@ export default function TaskForm({ sprint_id, projectId, onTaskAdded }: TaskForm
       sprint_id,description ,weightage ,assignee, projectId
     });
     try {
-      const response = await fetch("https://collabsphere-nz2u.onrender.com/project/edit_tasks/add_task", {
+      const response = await fetch("https://collabsphere-d7g1.onrender.com/project/edit_tasks/add_task", {
         method: "POST",
         credentials: "include",
         headers: {

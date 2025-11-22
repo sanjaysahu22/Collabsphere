@@ -44,7 +44,7 @@ export default function ProjectsPage() {
     const fetchProjects = async () => {
       try {
         setLoading(true)
-        const response = await fetch("https://collabsphere-nz2u.onrender.com/list/projects", {
+        const response = await fetch("https://collabsphere-d7g1.onrender.com/list/projects", {
           method: "POST",
           credentials: "include",
           headers: {
@@ -81,7 +81,7 @@ export default function ProjectsPage() {
   // Handle applying to a project
   const handleApplyToProject = async (projectId: number) => {
     try {
-      const response = await fetch("https://collabsphere-nz2u.onrender.com/apply/project", {
+      const response = await fetch("https://collabsphere-d7g1.onrender.com/apply/project", {
         method: "POST",
         credentials: "include",
         headers: {

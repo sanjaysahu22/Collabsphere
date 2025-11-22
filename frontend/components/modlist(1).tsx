@@ -14,7 +14,7 @@ const EligibleUsers = ({ projectId }: { projectId: number }) => {
   useEffect(() => {
     const fetchEligibleUsers = async () => {
       try {
-        const apiUrl = `https://collabsphere-nz2u.onrender.com/project/add_mod/eligible_users?project_id=${projectId}`;
+        const apiUrl = `https://collabsphere-d7g1.onrender.com/project/add_mod/eligible_users?project_id=${projectId}`;
         const response = await fetch(apiUrl, {
           method: "GET",
           credentials: "include", 
