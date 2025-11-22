@@ -36,7 +36,7 @@ const AddTaskForm = () => {
     try {
       // Make a POST request to the backend API
       const response = await fetch(
-        "http://127.0.0.1:5000/project/edit_tasks/add_task",
+        "https://collabsphere-nz2u.onrender.com/project/edit_tasks/add_task",
         {
           method: "POST",
           credentials: "include", // Include cookies or authentication tokens

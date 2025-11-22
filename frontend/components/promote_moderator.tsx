@@ -17,7 +17,7 @@ const PromoteUser = () => {
         user_id: "23bcy25",
       };
       const response = await fetch(
-        "http://127.0.0.1:5000/project/add_mod/promote",
+        "https://collabsphere-nz2u.onrender.com/project/add_mod/promote",
         {
           method: "POST",
           credentials: "include",

@@ -99,7 +99,7 @@ export default function ProjectAnalytics({ projectId }: ProjectAnalyticsProps) {
         setLoading(true);
         setError(null);
 
-        const apiUrl = `http://127.0.0.1:5000/project/analytics?project_id=${projectId}`;
+        const apiUrl = `https://collabsphere-nz2u.onrender.com/project/analytics?project_id=${projectId}`;
         const response = await fetch(apiUrl, {
           method: "GET",
           credentials: "include",

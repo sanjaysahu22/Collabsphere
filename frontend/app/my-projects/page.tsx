@@ -31,7 +31,7 @@ const parsedUser = userlocal ? JSON.parse(userlocal) : null;
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/list/myprojects", {
+        const response = await fetch("https://collabsphere-nz2u.onrender.com/list/myprojects", {
           method: "POST",
           credentials: "include", 
           headers: {

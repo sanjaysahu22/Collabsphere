@@ -16,11 +16,29 @@ from sql import *
 #from sql import apply_project_status_sql,list_apply_project_sql,update_project_application_status_sql,apply_project_status_takeback_sql,update_profile_sql,accept_mentor_sql,notification_sql
 #from sql import apply_mentors_takeback_sql,list_users_sql,list_projects_sql,list_current_projects_sql,list_past_projects_sql,admin_request_sql,admin_request_accept_sql,list_myprojects_sql,user_insert_google_sql
 from google.cloud.firestore_v1 import FieldFilter
+import os
+import json
+
 # Initialize Firebase Admin
-cred = credentials.Certificate("key.json")
-firebase_admin.initialize_app(cred)
-db = firestore.client()
-users = db.collection('users')
+try:
+    # Check if running in production (environment variable exists)
+    firebase_key_json = os.environ.get('FIREBASE_KEY_JSON')
+    if firebase_key_json:
+        # Production: Use environment variable
+        firebase_config = json.loads(firebase_key_json)
+        cred = credentials.Certificate(firebase_config)
+    else:
+        # Development: Use local key file
+        cred = credentials.Certificate("key.json")
+    
+    firebase_admin.initialize_app(cred)
+    db = firestore.client()
+    users = db.collection('users')
+    print("Firebase initialized successfully")
+except Exception as e:
+    print(f"Warning: Firebase initialization failed: {e}")
+    db = None
+    users = None
 
 app = Flask(__name__)
 

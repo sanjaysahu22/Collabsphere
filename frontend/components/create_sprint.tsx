@@ -68,7 +68,7 @@ const CreateSprint = ({ project_id, onSprintCreated, onClose }: CreateSprintProp
       
       console.log("Payload:", payload);
       
-      const response = await fetch("http://127.0.0.1:5000/project/create_sprint", {
+      const response = await fetch("https://collabsphere-nz2u.onrender.com/project/create_sprint", {
         method: "POST",
         credentials: "include",
         headers: {

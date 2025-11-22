@@ -26,7 +26,7 @@ const GoogleLogin = () => {
   const [user_password, set_user_password] = useState("");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/auto_login", {
+    fetch("https://collabsphere-nz2u.onrender.com/auto_login", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -44,7 +44,7 @@ const GoogleLogin = () => {
       const uid = await user.uid;
       const fingerprint = await getFingerprint();
 
-      const response = await fetch("http://127.0.0.1:5000/verify/user_id", {
+      const response = await fetch("https://collabsphere-nz2u.onrender.com/verify/user_id", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken, uid, fingerprint, user_email }),
@@ -87,7 +87,7 @@ const GoogleLogin = () => {
       const uid = user.uid;
       const fingerprint = await getFingerprint();
 
-      const response = await fetch("http://127.0.0.1:5000/verify/google", {
+      const response = await fetch("https://collabsphere-nz2u.onrender.com/verify/google", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken, uid, fingerprint, email }),

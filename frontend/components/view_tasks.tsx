@@ -132,7 +132,7 @@ const ProjectTasks = ({ projectId, sprint_id }: ProjectTasksProps) => {
     setLoading(true);
     try {
       // Add sprint_id to the URL if provided
-      let url = `http://127.0.0.1:5000/project/view_tasks?project_id=${projectId}`;
+      let url = `https://collabsphere-nz2u.onrender.com/project/view_tasks?project_id=${projectId}`;
       if (sprint_id) {
         url += `&sprint_id=${sprint_id}`;
       }
@@ -185,7 +185,7 @@ const ProjectTasks = ({ projectId, sprint_id }: ProjectTasksProps) => {
    
     
     try {
-      const response = await fetch("http://127.0.0.1:5000/project/edit_tasks/update_task", {
+      const response = await fetch("https://collabsphere-nz2u.onrender.com/project/edit_tasks/update_task", {
         method: "POST",
         credentials: "include",
         headers: {

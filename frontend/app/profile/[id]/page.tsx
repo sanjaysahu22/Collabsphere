@@ -99,7 +99,7 @@ const id = 'sanjay23bcy51';
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/profile/view", {
+        const response = await fetch("https://collabsphere-nz2u.onrender.com/profile/view", {
           method: "POST",
           credentials: "include", // Include cookies if needed
           headers: {
@@ -130,7 +130,7 @@ const id = 'sanjay23bcy51';
     const fetchCurrentProjects = async () => {
       try {
         const response = await fetch(
-          "http://127.0.0.1:5000/list/current/projects",
+          "https://collabsphere-nz2u.onrender.com/list/current/projects",
           {
             method: "POST",
             credentials: "include", // Include cookies if needed
@@ -174,7 +174,7 @@ const id = 'sanjay23bcy51';
     const fetchPastProjects = async () => {
       try {
         const response = await fetch(
-          "http://127.0.0.1:5000/list/past/projects",
+          "https://collabsphere-nz2u.onrender.com/list/past/projects",
           {
             method: "POST",
             credentials: "include", // Include cookies if needed
@@ -227,7 +227,7 @@ const id = 'sanjay23bcy51';
     try {
       console.log(profileData);
       // Make the API call using your existing API endpoint
-      const response = await fetch("http://127.0.0.1:5000/update/profile", {
+      const response = await fetch("https://collabsphere-nz2u.onrender.com/update/profile", {
         method: "POST",
         credentials: "include", // Include cookies if needed
         headers: {

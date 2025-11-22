@@ -46,7 +46,7 @@ interface ProjectDetailsProps {
 
 const fetchProjectDetails = async(project_id: number) => {
   try {
-    const response = await fetch(`http://127.0.0.1:5000/project/view_details?project_id=${project_id}`, {
+    const response = await fetch(`https://collabsphere-nz2u.onrender.com/project/view_details?project_id=${project_id}`, {
       method: "GET",
       credentials: "include",
       headers: {
@@ -70,7 +70,7 @@ const fetchProjectDetails = async(project_id: number) => {
 // Function to update project status
 const updateProjectStatus = async (project_id: number, newStatus: string, userId: string) => {
   try {
-    const response = await fetch(`http://127.0.0.1:5000/project/update_status`, {
+    const response = await fetch(`https://collabsphere-nz2u.onrender.com/project/update_status`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -98,7 +98,7 @@ const updateProjectStatus = async (project_id: number, newStatus: string, userId
 // New function to submit project rating
 const submitProjectRating = async (project_id: number, userId: string, rating: number) => {
   try {
-    const response = await fetch(`http://127.0.0.1:5000/project/give_rating`, {
+    const response = await fetch(`https://collabsphere-nz2u.onrender.com/project/give_rating`, {
       method: "POST",
       credentials: "include",
       headers: {

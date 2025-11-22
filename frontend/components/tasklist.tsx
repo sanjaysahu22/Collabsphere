@@ -21,7 +21,7 @@ export default function TaskList({ sprintId }: TaskListProps) {
   const fetchTasks = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:5000/sprint/view_tasks?sprint_id=${sprintId}`, {
+      const response = await fetch(`https://collabsphere-nz2u.onrender.com/sprint/view_tasks?sprint_id=${sprintId}`, {
         method: "GET",
         credentials: "include",
         headers: {
