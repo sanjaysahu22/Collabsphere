@@ -3,9 +3,29 @@ from flask import Blueprint, request, jsonify
 import firebase_admin
 from firebase_admin import credentials, auth
 from functools import wraps
+import os
+import json
 
 # Initialize Firebase Admin SDK
-cred = credentials.Certificate("key.json")
+def get_firebase_credentials():
+    # Try to get credentials from environment variables first (for production/Render)
+    if os.getenv('FIREBASE_CREDENTIALS'):
+        # Parse the JSON string from environment variable
+        cred_dict = json.loads(os.getenv('FIREBASE_CREDENTIALS'))
+        return credentials.Certificate(cred_dict)
+    
+    # Fallback to key.json file for local development
+    elif os.path.exists("key.json"):
+        return credentials.Certificate("key.json")
+    
+    else:
+        raise ValueError("Firebase credentials not found. Please set FIREBASE_CREDENTIALS environment variable or provide key.json file.")
+
+cred = get_firebase_credentials()
+
+# Initialize Firebase Admin SDK if not already initialized
+if not firebase_admin._apps:
+    firebase_admin.initialize_app(cred)
 
 #firebase_admin.initialize_app(cred)
 

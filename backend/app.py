@@ -20,17 +20,22 @@ import os
 import json
 
 # Initialize Firebase Admin
-try:
-    # Check if running in production (environment variable exists)
-    firebase_key_json = os.environ.get('FIREBASE_KEY_JSON')
-    if firebase_key_json:
-        # Production: Use environment variable
-        firebase_config = json.loads(firebase_key_json)
-        cred = credentials.Certificate(firebase_config)
-    else:
-        # Development: Use local key file
-        cred = credentials.Certificate("key.json")
+def get_firebase_credentials():
+    # Try to get credentials from environment variables first (for production/Render)
+    if os.getenv('FIREBASE_CREDENTIALS'):
+        # Parse the JSON string from environment variable
+        cred_dict = json.loads(os.getenv('FIREBASE_CREDENTIALS'))
+        return credentials.Certificate(cred_dict)
     
+    # Fallback to key.json file for local development
+    elif os.path.exists("key.json"):
+        return credentials.Certificate("key.json")
+    
+    else:
+        raise ValueError("Firebase credentials not found. Please set FIREBASE_CREDENTIALS environment variable or provide key.json file.")
+
+try:
+    cred = get_firebase_credentials()
     firebase_admin.initialize_app(cred)
     db = firestore.client()
     users = db.collection('users')
