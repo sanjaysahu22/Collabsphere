@@ -24,7 +24,8 @@ users = db.collection('users')
 
 app = Flask(__name__)
 
-CORS(app,supports_credentials=True)
+# Configure CORS for production
+CORS(app, supports_credentials=True, origins=["http://localhost:3000", "http://localhost:3001", "https://*.vercel.app"])
 
 @app.route('/check',methods=['GET'])
 def check():
@@ -894,7 +895,9 @@ def create_sprint_route():
 
      
 if __name__ == "__main__":
-    app.run(debug=True)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
 
 
 
