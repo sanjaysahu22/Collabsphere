@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react"
 
+interface EligibleUser {
+  roll_no: string;
+  name: string;
+}
+
 interface TeamMember {
   id: string; // This is roll_no from the API 
   name: string;
@@ -49,7 +54,7 @@ const TeamMemberDropdown: React.FC<TeamMemberDropdownProps> = ({
         
         // Transform the API response to match our TeamMember interface
         if (data.eligible_users && Array.isArray(data.eligible_users)) {
-          const members: TeamMember[] = data.eligible_users.map((user: any) => ({
+          const members: TeamMember[] = data.eligible_users.map((user: EligibleUser) => ({
             id: user.roll_no,
             name: user.name
           }));

@@ -1,7 +1,7 @@
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import {  Star } from "lucide-react"
+import { Star } from "lucide-react"
 import type { TeamMember } from "@/lib/types"
 import Link from "next/link"
 
@@ -9,8 +9,18 @@ interface TeamMemberCardProps {
   member: TeamMember
 }
 
-export default function TeamMemberCard({ member }: any) {
-  const { name, role, avatar, rating, tech_stack, projects, email  , roll_no} = member
+interface MemberData {
+  name: string;
+  role: string;
+  avatar?: string;
+  rating: number;
+  tech_stack: string[];
+  projects: number;
+  roll_no: string;
+}
+
+export default function TeamMemberCard({ member }: { member: MemberData }) {
+  const { name, role, avatar, rating, tech_stack, projects, roll_no } = member
   return (
     <Link href={`/profile/${roll_no}`} >
     <Card className="bg-zinc-900 border-zinc-800 overflow-hidden">
@@ -38,7 +48,7 @@ export default function TeamMemberCard({ member }: any) {
   <p className="text-sm text-muted-foreground mb-2">Skills</p>
   {Array.isArray(tech_stack) && tech_stack.length > 0 ? (
     <div className="flex flex-wrap gap-1">
-      {tech_stack.map((skill: any, index: number) => (
+      {tech_stack.map((skill: string, index: number) => (
         <Badge key={index} variant="outline" className="bg-zinc-800">
           {skill}
         </Badge>

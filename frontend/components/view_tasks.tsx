@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // Define the interface for the response data
 interface Task {
@@ -128,7 +128,7 @@ const ProjectTasks = ({ projectId, sprint_id }: ProjectTasksProps) => {
   const [error, setError] = useState<string | null>(null);
   const [statusUpdating, setStatusUpdating] = useState<boolean>(false);
 
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     setLoading(true);
     try {
       // Add sprint_id to the URL if provided
@@ -160,11 +160,11 @@ const ProjectTasks = ({ projectId, sprint_id }: ProjectTasksProps) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [projectId, sprint_id]);
 
   useEffect(() => {
     fetchTasks();
-  }, [projectId, sprint_id]);
+  }, [fetchTasks]);
   const formatStatus = (status: string) => {
     const normalized = status.toLowerCase().replace(/_/g, "-");
     switch (normalized) {

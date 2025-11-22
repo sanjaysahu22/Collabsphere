@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Task {
@@ -14,11 +14,20 @@ interface TaskListProps {
   sprintId: string;
 }
 
+interface TaskResponse {
+  task_id: number;
+  title: string;
+  description?: string;
+  weightage?: number;
+  status?: string;
+  assignee?: string;
+}
+
 export default function TaskList({ sprintId }: TaskListProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await fetch(`https://collabsphere-d7g1.onrender.com/sprint/view_tasks?sprint_id=${sprintId}`, {
@@ -38,12 +47,12 @@ export default function TaskList({ sprintId }: TaskListProps) {
 
       if (data.tasks && Array.isArray(data.tasks)) {
         setTasks(
-          data.tasks.map((task: any) => ({
+          data.tasks.map((task: TaskResponse) => ({
             id: task.task_id.toString(),
             title: task.title,
             description: task.description || "",
             weightage: task.weightage || 1,
-            status: task.status.toLowerCase() || "todo",
+            status: (task.status?.toLowerCase() as "todo" | "in-progress" | "completed") || "todo",
             assignee: task.assignee || undefined,
           }))
         );
@@ -53,11 +62,11 @@ export default function TaskList({ sprintId }: TaskListProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [sprintId]);
 
   useEffect(() => {
     fetchTasks();
-  }, [sprintId]);
+  }, [fetchTasks]);
 
   if (isLoading) {
     return <div>Loading tasks...</div>;
@@ -69,7 +78,7 @@ export default function TaskList({ sprintId }: TaskListProps) {
 
   return (
     <div className="space-y-4">
-      {tasks.map((task) => (
+      {tasks.map((task: Task) => (
         <Card key={task.id} className="bg-zinc-800 border-zinc-700">
           <CardHeader>
             <CardTitle>{task.title}</CardTitle>

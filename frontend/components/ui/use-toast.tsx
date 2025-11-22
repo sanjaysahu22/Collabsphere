@@ -17,7 +17,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = React.useState<ToastProps[]>([])
 
   const toast = React.useCallback((props: ToastProps) => {
-    const id = Math.random().toString(36).substring(2, 9)
+    // Remove unused id variable since we're not using it
     setToasts((prev) => [...prev, props])
     
     // Auto dismiss after 3 seconds
