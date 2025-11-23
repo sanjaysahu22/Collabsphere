@@ -3,13 +3,13 @@ import { getAuth, GoogleAuthProvider, signInWithPopup,EmailAuthProvider,linkWith
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAgu7M6r1guWru4bSkFNuw87GyTxjz6xaI",
-  authDomain: "collabsphere-4986c.firebaseapp.com",
-  projectId: "collabsphere-4986c",
-  storageBucket: "collabsphere-4986c.firebasestorage.app",
-  messagingSenderId: "928391035636",
-  appId: "1:928391035636:web:3b124c73cc88dbe750fca1",
-  measurementId: "G-XW6SQMT87H"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase

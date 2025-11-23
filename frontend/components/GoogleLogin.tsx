@@ -12,6 +12,7 @@ import {
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { Button } from "./ui/button";
 import { useUserContext } from "../lib/usercontext";
+import { API_ENDPOINTS } from "../lib/config";
 
 const getFingerprint = async () => {
   const fp = await FingerprintJS.load();
@@ -26,7 +27,7 @@ const GoogleLogin = () => {
   const [user_password, set_user_password] = useState("");
 
   useEffect(() => {
-    fetch("https://collabsphere-d7g1.onrender.com/auto_login", {
+    fetch(API_ENDPOINTS.AUTO_LOGIN, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -44,7 +45,7 @@ const GoogleLogin = () => {
       const uid = await user.uid;
       const fingerprint = await getFingerprint();
 
-      const response = await fetch("https://collabsphere-d7g1.onrender.com/verify/user_id", {
+      const response = await fetch(API_ENDPOINTS.VERIFY_USER_ID, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken, uid, fingerprint, user_email }),
@@ -69,9 +70,14 @@ const GoogleLogin = () => {
 
   const handleLogin = async () => {
     try {
-      provider.setCustomParameters({ prompt: "select_account" }); // ✅ Set it first
+      provider.setCustomParameters({ 
+        prompt: "select_account",
+        // Add additional parameters for better production support
+        hd: "iiitkottayam.ac.in" // Restrict to your domain
+      });
+      
       const result = await signInWithPopup(auth, provider);
-        const user = result.user;
+      const user = result.user;
       const email = user.email;
 
       if (email?.endsWith("iiitkottayam.ac.in")) {
@@ -87,7 +93,7 @@ const GoogleLogin = () => {
       const uid = user.uid;
       const fingerprint = await getFingerprint();
 
-      const response = await fetch("https://collabsphere-d7g1.onrender.com/verify/google", {
+      const response = await fetch(API_ENDPOINTS.VERIFY_GOOGLE, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken, uid, fingerprint, email }),
@@ -106,6 +112,16 @@ const GoogleLogin = () => {
       }
     } catch (error) {
       console.error("Login Failed:", error);
+      // Add user-friendly error handling
+      if (error instanceof Error) {
+        if (error.message.includes("popup-closed-by-user")) {
+          console.log("User closed the popup");
+        } else if (error.message.includes("network-request-failed")) {
+          alert("Network error. Please check your connection and try again.");
+        } else {
+          alert("Login failed. Please try again.");
+        }
+      }
     }
   };
 
