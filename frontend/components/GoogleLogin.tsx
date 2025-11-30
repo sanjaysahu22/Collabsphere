@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"; // Import for navigation
 import { auth, provider } from "./firebase";
 import { 
   signInWithPopup, 
+  signInWithRedirect,
   signInWithEmailAndPassword, 
   signOut, 
   deleteUser 
@@ -76,7 +77,17 @@ const GoogleLogin = () => {
         hd: "iiitkottayam.ac.in" // Restrict to your domain
       });
       
-      const result = await signInWithPopup(auth, provider);
+      // Try popup first (works on most desktop browsers). If popup is blocked
+      // or an origin/redirect issue occurs, fall back to redirect flow.
+      let result;
+      try {
+        result = await signInWithPopup(auth, provider);
+      } catch (popupError) {
+        console.warn("Popup failed or blocked, falling back to redirect:", popupError);
+        // Fallback to redirect sign-in which uses full-page redirect flow
+        await signInWithRedirect(auth, provider);
+        return; // redirect initiated, no further client-side handling
+      }
       const user = result.user;
       const email = user.email;
 
