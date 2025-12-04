@@ -12,9 +12,6 @@ from auth import  firebase_uid_required  # Import auth_bp
 
 from smtp import send_email
 from sql import *
-#from sql import add_projects,ranking,first_logins,profile_views,list_of_mentors_sql,apply_mentors_sql,apply_project_sql
-#from sql import apply_project_status_sql,list_apply_project_sql,update_project_application_status_sql,apply_project_status_takeback_sql,update_profile_sql,accept_mentor_sql,notification_sql
-#from sql import apply_mentors_takeback_sql,list_users_sql,list_projects_sql,list_current_projects_sql,list_past_projects_sql,admin_request_sql,admin_request_accept_sql,list_myprojects_sql,user_insert_google_sql
 from google.cloud.firestore_v1 import FieldFilter
 import os
 import json
@@ -47,13 +44,13 @@ except Exception as e:
 
 app = Flask(__name__)
 
-# Configure CORS for production
+# Configure CORS for production - add all your production domains
 CORS(app, supports_credentials=True, origins=[
     "http://localhost:3000",
     "http://localhost:3001",
-    "https://*.vercel.app",
-    "https://collabsphere.sanjaysahu.site",
+    "https://collabsphere-vert.vercel.app",
     "https://collabsphere-d7g1.onrender.com",
+    "https://collabsphere.sanjaysahu.site"
 ])
 
 @app.route('/check',methods=['GET'])
