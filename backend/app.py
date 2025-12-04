@@ -53,6 +53,7 @@ CORS(app, supports_credentials=True, origins=[
     "http://localhost:3001",
     "https://*.vercel.app",
     "https://collabsphere.sanjaysahu.site",
+    "https://collabsphere-d7g1.onrender.com",
 ])
 
 @app.route('/check',methods=['GET'])
