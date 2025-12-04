@@ -48,7 +48,12 @@ except Exception as e:
 app = Flask(__name__)
 
 # Configure CORS for production
-CORS(app, supports_credentials=True, origins=["http://localhost:3000", "http://localhost:3001", "https://*.vercel.app"])
+CORS(app, supports_credentials=True, origins=[
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://*.vercel.app",
+    "https://collabsphere.sanjaysahu.site",
+])
 
 @app.route('/check',methods=['GET'])
 def check():
