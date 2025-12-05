@@ -49,7 +49,6 @@ CORS(app, supports_credentials=True, origins=[
     "http://localhost:3000",
     "http://localhost:3001",
     "https://collabsphere-vert.vercel.app",
-    "https://collabsphere-d7g1.onrender.com",
     "https://collabsphere.sanjaysahu.site"
 ])
 
@@ -120,6 +119,10 @@ def transform_email(username):
 
 @app.route('/verify/google', methods=['POST'])
 def verify():
+    # Check if Firebase is initialized
+    if db is None:
+        return jsonify({"error": "Firebase not initialized. Check FIREBASE_CREDENTIALS environment variable."}), 500
+    
     #new sign in
     time.sleep(5)  # Add a 2-second delay before verifying
 
@@ -206,49 +209,45 @@ def get_roll_no(uid):
  
 @app.route('/auto_login',methods=['GET','POST'])
 def auto_login():
-    if request.method=='POST':
-     data=request.json()
-     #    uid=request.cookies.get("uid")
-       #  print(uid)
-       #take fingerprint frontend
-       
-     uid=request.cookies.get("uid")
-
-     
-     fingerprint=data["fingerprint"]
-
-     if not uid or not fingerprint:
-        return jsonify({"authenticated": False, "message": "Session expired"}), 401
-     
-
+    # Support both GET and POST
     try:
-       #user=auth.get_user(uid)
-      # use firebase client and set expiration time
-      three_days_ago = datetime.utcnow() - timedelta(days=3)
-
-# Convert the datetime to a string or timestamp format suitable for the database
-      three_days_ago_str = three_days_ago.strftime('%Y-%m-%dT%H:%M:%S')  # Example format
-
-# Apply the filters: uid, fingerprint, and created_at within the last 3 days
-      result = users.where(filter=FieldFilter("uid", "==", uid)) \
-              .where(filter=FieldFilter("fingerprint", "==", fingerprint)) \
-              .where(filter=FieldFilter("created_at", "<=", three_days_ago_str))
-       #result = users.where(filter=FieldFilter("uid", "==", uid)) \
-              #.where(filter=FieldFilter("fingerprint", "==", fingerprint))
-
-      output=result.get()
-      if output:
-             
-         return jsonify({
-            "authenticated": True,
-
-        })
-      else:
+        uid = request.cookies.get("uid")
+        
+        # Get fingerprint from POST body or query param
+        if request.method == 'POST':
+            data = request.get_json() or {}
+            fingerprint = data.get("fingerprint")
+        else:
+            fingerprint = request.args.get("fingerprint")
+        
+        # For now, if no fingerprint provided, just check if uid exists
+        if not uid:
+            return jsonify({"authenticated": False, "message": "Session expired"}), 401
+        
+        # Check if Firebase is initialized
+        if db is None or users is None:
+            print("ERROR: Firebase not initialized")
+            return jsonify({"authenticated": False, "message": "Server configuration error"}), 500
+        
+        # Query Firestore for user with this uid
+        if fingerprint:
+            # If fingerprint provided, match both uid and fingerprint
+            result = users.where(filter=FieldFilter("uid", "==", uid)) \
+                          .where(filter=FieldFilter("fingerprint", "==", fingerprint))
+        else:
+            # If no fingerprint, just check uid exists
+            result = users.where(filter=FieldFilter("uid", "==", uid))
+        
+        output = result.get()
+        
+        if output and len(output) > 0:
+            return jsonify({"authenticated": True})
+        else:
             return jsonify({"authenticated": False, "message": "Invalid session"}), 401
-
-
-    except:
-         return jsonify({"authenticated": False, "message": "Invalid session"}), 401
+    
+    except Exception as e:
+        print(f"auto_login error: {e}")
+        return jsonify({"authenticated": False, "message": "Invalid session"}), 401
 @app.route('/logout',methods=['GET'])
 def logout():
  try:
